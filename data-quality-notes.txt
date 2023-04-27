@@ -1,0 +1,40 @@
+
+
+
+Measuring Data Quality
+
+references
+ https://betterprogramming.pub/5-data-quality-tools-you-should-know-about-dacc38aa6ba8
+ https://www.demystifyingdata.io/2021/10/04/soda-github-action.html
+ https://www.soda.io/core
+ https://docs.soda.io/soda-core/overview-main.html#
+ https://opendatadiscovery.org/
+
+
+Data Quality Attributes
+------------------------
+How data quality plays out in an organization largely depends on how that organization defines it and prioritizes it. However, there are seven useful indicators of quality.
+
+Relevancy: how relevant the data is for the business.
+
+Accuracy: how accurate the data is.
+
+Completeness: whether the data is complete and in a stable state.
+
+Consistency: how consistent the data is across the organization. If the same piece of data from multiple sources is transformed using the same application, the output should always be the same.
+
+Conformity: whether the data adheres to the standards and format expected by business rules.
+
+Uniqueness: whether multiple copies of the same data are available in the enterprise or if it’s the single source of truth.
+
+Timeliness: how timely the data is for current business needs.
+
+
+
+5 Data Quality Tools
+--------------------
+Great Expectations
+Spectacles
+Datafold
+dbt (Data Build Tool)
+Evidently

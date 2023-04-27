@@ -1,0 +1,259 @@
+{
+	"definitionName": null,
+	"defaultDataSource": "tutorsdb",
+	"dataTimestamp": "2023-04-24T03:11:14+00:00",
+	"scanStartTimestamp": "2023-04-24T03:11:14+00:00",
+	"scanEndTimestamp": "2023-04-24T03:11:14+00:00",
+	"hasErrors": false,
+	"hasWarnings": false,
+	"hasFailures": true,
+	"metrics": [
+		{
+			"identity": "metric-tutorsdb-course-row_count",
+			"metricName": "row_count",
+			"value": 4,
+			"dataSourceName": "tutorsdb"
+		},
+		{
+			"identity": "metric-tutorsdb-student-row_count",
+			"metricName": "row_count",
+			"value": 4,
+			"dataSourceName": "tutorsdb"
+		},
+		{
+			"identity": "metric-tutorsdb-course-descr-missing_count-993a2704",
+			"metricName": "missing_count",
+			"value": 4,
+			"dataSourceName": "tutorsdb"
+		}
+	],
+	"checks": [
+		{
+			"identity": "c802193c",
+			"name": "row_count for tutorsdb.course",
+			"type": "generic",
+			"definition": "checks for course:\n  - row_count = 2:\n      name: row_count for tutorsdb.course\n",
+			"resourceAttributes": [],
+			"location": {
+				"filePath": "./checks.yml",
+				"line": 2,
+				"col": 5
+			},
+			"dataSource": "tutorsdb",
+			"table": "course",
+			"filter": null,
+			"column": null,
+			"metrics": [
+				"metric-tutorsdb-course-row_count"
+			],
+			"outcome": "fail",
+			"outcomeReasons": [],
+			"archetype": null
+		},
+		{
+			"identity": "b89e9fd4",
+			"name": "missing values for tutorsdb.course.descr",
+			"type": "generic",
+			"definition": "checks for course:\n  - missing_count(descr) = 0:\n      name: missing values for tutorsdb.course.descr\n      missing values: [n/a, NA, none]\n",
+			"resourceAttributes": [],
+			"location": {
+				"filePath": "./checks.yml",
+				"line": 4,
+				"col": 5
+			},
+			"dataSource": "tutorsdb",
+			"table": "course",
+			"filter": null,
+			"column": "descr",
+			"metrics": [
+				"metric-tutorsdb-course-descr-missing_count-993a2704"
+			],
+			"outcome": "fail",
+			"outcomeReasons": [],
+			"archetype": null
+		},
+		{
+			"identity": "44ea110a",
+			"name": "row_count for tutorsdb.student",
+			"type": "generic",
+			"definition": "checks for student:\n  - row_count = 4:\n      name: row_count for tutorsdb.student\n",
+			"resourceAttributes": [],
+			"location": {
+				"filePath": "./checks.yml",
+				"line": 8,
+				"col": 5
+			},
+			"dataSource": "tutorsdb",
+			"table": "student",
+			"filter": null,
+			"column": null,
+			"metrics": [
+				"metric-tutorsdb-student-row_count"
+			],
+			"outcome": "pass",
+			"outcomeReasons": [],
+			"archetype": null
+		}
+	],
+	"queries": [
+		{
+			"name": "tutorsdb.course.aggregation[0]",
+			"dataSource": "tutorsdb",
+			"table": "course",
+			"partition": null,
+			"column": null,
+			"sql": "SELECT \n  COUNT(*),\n  COUNT(CASE WHEN descr IS NULL OR descr IN ('n/a','NA','none') THEN 1 END) \nFROM public.course",
+			"exception": null,
+			"duration": "0:00:00.004011"
+		},
+		{
+			"name": "tutorsdb.descr.failed_rows[missing_count]",
+			"dataSource": "tutorsdb",
+			"table": "course",
+			"partition": null,
+			"column": "descr",
+			"sql": "SELECT * FROM public.course \n WHERE descr IS NULL OR descr IN ('n/a','NA','none') \n LIMIT 100",
+			"exception": null,
+			"duration": "0:00:00.008012"
+		},
+		{
+			"name": "tutorsdb.descr.failed_rows[missing_count].failing_sql",
+			"dataSource": "tutorsdb",
+			"table": "course",
+			"partition": null,
+			"column": "descr",
+			"sql": "SELECT * FROM public.course \n WHERE descr IS NULL OR descr IN ('n/a','NA','none')",
+			"exception": null,
+			"duration": null
+		},
+		{
+			"name": "tutorsdb.descr.failed_rows[missing_count].passing_sql",
+			"dataSource": "tutorsdb",
+			"table": "course",
+			"partition": null,
+			"column": "descr",
+			"sql": "SELECT * FROM public.course \n WHERE NOT (descr IS NULL OR descr IN ('n/a','NA','none'))",
+			"exception": null,
+			"duration": null
+		},
+		{
+			"name": "tutorsdb.student.aggregation[0]",
+			"dataSource": "tutorsdb",
+			"table": "student",
+			"partition": null,
+			"column": null,
+			"sql": "SELECT \n  COUNT(*) \nFROM public.student",
+			"exception": null,
+			"duration": "0:00:00.001000"
+		}
+	],
+	"automatedMonitoringChecks": [],
+	"profiling": [],
+	"metadata": [],
+	"logs": [
+		{
+			"level": "INFO",
+			"message": "Soda Core 3.0.32",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 1,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "Using DefaultSampler",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 2,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "Scan summary:",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 3,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "1/3 checks PASSED: ",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 4,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "    student in tutorsdb",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 5,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "      row_count for tutorsdb.student [PASSED]",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 6,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "2/3 checks FAILED: ",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 7,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "    course in tutorsdb",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 8,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "      row_count for tutorsdb.course [FAILED]",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 9,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "        check_value: 4",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 10,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "      missing values for tutorsdb.course.descr [FAILED]",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 11,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "        check_value: 4",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 12,
+			"doc": null,
+			"location": null
+		},
+		{
+			"level": "INFO",
+			"message": "Oops! 2 failures. 0 warnings. 0 errors. 1 pass.",
+			"timestamp": "2023-04-24T03:11:14+00:00",
+			"index": 13,
+			"doc": null,
+			"location": null
+		}
+	]
+}

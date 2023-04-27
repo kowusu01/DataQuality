@@ -1,0 +1,45 @@
+
+Dataset:
+https://www.kaggle.com/datasets/imdevskp/malaria-dataset?select=reported_numbers.csv
+
+1. quality scan
+-------------
+scan_definition_name
+data_source_name
+start_timestamp
+end_timestamp
+num_checks
+num_errors
+num_warning
+num_failures
+num_passes
+
+2. scan_checks
+---------------
+identity: c802193c,
+name: row_count for tutorsdb.course,
+soda_metric_id: e.g. 1 for row_count
+definition: "checks for course:\n  - row_count = 2:\n      name: row_count for tutorsdb.course\n",
+location: ./checks.yml, line": 2
+data_source_name: tutorsdb,
+table: course,
+outcome: fail,
+
+
+3. soda_metric
+------------
+See https://docs.soda.io/soda-cl/metrics-and-checks.html
+id
+name
+
+
+4. tag_definition
+tag_definition_id
+tag_name
+
+
+5. scan_tag
+item_id: quality_scan_id`
+tag_id: tag_definition_id
+
+----------------------------------------------
