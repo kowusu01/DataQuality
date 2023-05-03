@@ -10,7 +10,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   # - mismatch 
   # 
 
-  data_set <- fnReadFile(f)
+  data_set <- fnReadFile(fdata_file_path)
   
   # take a look at what the result looks like
   #glimpse(data_set)
