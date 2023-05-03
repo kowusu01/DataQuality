@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  app-db:
+    image: zkot2/postgresdb:v1
+    container_name: db.postgres.dev
+    ports:
+      - "4532:5432"
+    networks:
+      - app-net
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgrespw
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - 
+         type: bind
+         source: /home/zkot2/postgres/dbfiles
+         target: /var/lib/postgresql/data
+      -
+         type: bind
+         source: /home/zkot2/postgres/completedfiles
+         target: /home
+  
+  data-readers:
+    image: zkot2/file-reader.svc:v1
+    #stdin_open: true # docker run -i
+    #tty: true        # docker run -t
+    container_name: app.fsreader.dev
+    volumes:
+      - 
+         type: bind
+         source: /home/zkot2/app_data
+         target: /app_data
+      - 
+         type: bind
+         source: /home/zkot2/app_data/completed
+         target: /app_data/completed           
+      - 
+         type: bind
+         source: /home/zkot2/app_data/bad
+         target: /app_data/bad
+      
+    depends_on:
+      - app-db
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    external:
+      name: containers_network

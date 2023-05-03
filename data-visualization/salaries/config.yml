@@ -1,0 +1,10 @@
+#########################################################################
+# config with just one section  - default
+########################################################################
+default:
+  
+  db_name: "salariesdb_dev"
+  db_host: "localhost"  
+  db_port: "5432"
+  db_userid:  "postgres"
+  db_pwd:  "postgrespw"

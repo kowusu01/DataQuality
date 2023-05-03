@@ -2,6 +2,18 @@
 Dataset:
 https://www.kaggle.com/datasets/imdevskp/malaria-dataset?select=reported_numbers.csv
 
+data_load_stats
+create table data_load_stats
+(
+	load_id
+	load_timestamp datetimetz not null  default now,
+	file_path varchar(255) not null,
+	total_records integer not null,
+	num_error integer not null,
+	num_warning integer not null	
+)
+
+
 1. quality scan
 -------------
 scan_definition_name

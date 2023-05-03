@@ -1,1 +1,0 @@
-select * from env_info
