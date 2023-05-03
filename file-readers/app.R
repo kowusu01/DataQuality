@@ -83,42 +83,45 @@ fn_main <- function()
   
   #print(paste("db: ", db_driver, db_name, db_host, db_port, db_uid, db_pwd))
   
-  db_connection = createConnection("PostgreSQL", MAIN_DB, "db.postgres.dev", 5432, "postgres", "postgrespw")
-  
-  
-  while (TRUE)
-  {
-    data_files <- list.files(DATA_FOLDER_NAME, pattern = ".pdf|.csv")
-    print(length(data_files))
+  tryCatch(
+    {
+      
+     db_connection = createConnection("PostgreSQL", MAIN_DB, "db.postgres.dev", 5432, "postgres", "postgrespw")
+     while (TRUE){
+       
+       data_files <- list.files(DATA_FOLDER_NAME, pattern = ".pdf|.csv")
+       print(length(data_files))
+      
+       if (length(data_files)==0){
+         print("no data found.")
+        }
+       else{
+        for (f in data_files){
+           
+           data = fnExploreAndSaveStats(f, db_connection)
+           print(paste("Done loading ", f, " to db."))
     
-    if (length(data_files)==0)
-    {
-      print("no data found.")
-    }
-    else
-    {
-      for (f in data_files){
-        
-         data <- fnReadFile(f)
-         # take a look at what the result looks like
-         glimpse(data)
-      
-         data |> head() |> gt()
-      
-         
-         # Add line number (record number to dataset)
-         data$record_number <- seq(1, nrow(data))
-         
-         data = fnExploreAndSaveStats(data, f, db_connection)
-         
-         print(paste("Done loading ", f, " to db."))
-  
-	       # next step: verify that all data have been loaded
+  	       # next step: verify that all data have been loaded
+        }
       }
+  	
+      Sys.sleep(60)
+      }
+    },
+    error=function(ex){
+      print(ex)
+      if (DBI::dbIsValid(db_connection)){
+        fnSaveErrorToDB(ex)  
+      }
+      else{
+        print("Unable to save error information to DB, connection object is not valid.")
+      }
+    },
+    finally = function(){
+      DBI::dbDisconnect(db_connection)
     }
-	
-    Sys.sleep(60)
-  }
+    
+  )
 }
 
 
@@ -129,6 +132,5 @@ fn_main <- function()
 ################################################################################
 
 result <- fn_main()
-
 
 # end of file

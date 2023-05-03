@@ -1,5 +1,5 @@
 
-fnExploreAndSaveStats <- function(data_set, data_file_path, db_connection){
+fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   # general stats
   # - number of failures
   # - separate bad data from good
@@ -10,6 +10,17 @@ fnExploreAndSaveStats <- function(data_set, data_file_path, db_connection){
   # - mismatch 
   # 
 
+  data_set <- fnReadFile(f)
+  
+  # take a look at what the result looks like
+  #glimpse(data_set)
+  
+  #data |> head() |> gt()
+  
+  
+  # Add line number (record number to dataset)
+  print("adding line numbers to data...")
+  data$record_number <- seq(1, nrow(data_set))
   glimpse(data_set)
   
   print("finding nulls in country field...")
@@ -93,9 +104,6 @@ fnExploreAndSaveStats <- function(data_set, data_file_path, db_connection){
   
   # load the load_id record just saved
   df <- dbGetQuery(db_connection, paste0("SELECT load_id from load_stats where file_path='", data_file_path, "'") )
-  df
-  
-  
   load_ids <- rep(df[1,1], nrow(data_set_complete_cases))
   load_id_df <- data.frame(load_id=c(load_ids))
   data_set_complete_cases <- load_id_df %>% cbind(data_set_complete_cases)
@@ -104,11 +112,13 @@ fnExploreAndSaveStats <- function(data_set, data_file_path, db_connection){
   glimpse(data_set_complete_cases)
   fnSaveDataInDatabase(data_set_complete_cases, TABLE_RECORDS_COMPLETE, db_connection)
 
-  #print ("saving bad data...")
-  #load_ids <- rep(df[1,1], nrow(bad_data))
-  #bad_data <- load_id_df %>% cbind(bad_data)
-  #glimpse(bad_data)
-  #fnSaveDataInDatabase(bad_data, TABLE_RECORDS_BAD, db_connection)
+  
+  print ("saving bad data...")
+  bad_data <- data_set[!complete.cases(data_set), ]
+  load_ids <- rep(df[1,1], nrow(bad_data))
+  bad_data <- load_id_df %>% cbind(bad_data)
+  glimpse(bad_data)
+  fnSaveDataInDatabase(bad_data, TABLE_RECORDS_BAD, db_connection)
   
   
   print ("saving issues detail...")
@@ -117,6 +127,7 @@ fnExploreAndSaveStats <- function(data_set, data_file_path, db_connection){
   issues_details <- load_id_df %>% cbind(issues_details)
   glimpse(issues_details)
   fnSaveDataInDatabase(issues_details, TABLE_ISSUES_DETAILS, db_connection)
+  
   #print ("Done saving all !!")
 
 }
@@ -130,7 +141,6 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
   dbWriteTable(db_connection, db_table, data_set, row.names=FALSE, append=TRUE)
   
   
-  
   # dbWriteTable(con, "MyTable", df, row.names=FALSE, append=TRUE)
   #df <- dbGetQuery(db_connection, "SELECT * FROM env_info")
   #df
@@ -138,4 +148,11 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
   #df
   # other commands
   # sbSendQuery(con, "insert into table...")
+}
+
+fnSaveErrorToDB <- function(ex, db_connection){
+  
+  if(DBI::dbIsValid(db_connection)){
+    print("saving error message to db...")  
+  }
 }
