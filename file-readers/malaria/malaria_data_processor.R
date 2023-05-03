@@ -67,7 +67,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
              issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
   }
   
-  print ("creating bad dataset")
+  print ("creating issues deatails dataset")
   issues_details<- country_is_na %>% rbind(year_is_na) %>% rbind(numcases_is_na) %>% rbind(numdeaths_is_na) %>% rbind(region_is_na)
   num_errors <- nrow(country_is_na) + 
     nrow(year_is_na) + 
@@ -116,6 +116,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   print ("saving bad data...")
   bad_data <- data_set[!complete.cases(data_set), ]
   load_ids <- rep(df[1,1], nrow(bad_data))
+  load_id_df <- data.frame(load_id=c(load_ids))
   bad_data <- load_id_df %>% cbind(bad_data)
   glimpse(bad_data)
   fnSaveDataInDatabase(bad_data, TABLE_RECORDS_BAD, db_connection)
