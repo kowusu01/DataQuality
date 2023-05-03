@@ -23,7 +23,7 @@ services:
          target: /home
   
   data-readers:
-    image: zkot2/file-reader.svc:v1
+    image: zkot2/file-reader.svc:v2
     #stdin_open: true # docker run -i
     #tty: true        # docker run -t
     container_name: app.fsreader.dev
