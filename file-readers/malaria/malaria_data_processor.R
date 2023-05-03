@@ -20,7 +20,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   
   # Add line number (record number to dataset)
   print("adding line numbers to data...")
-  data$record_number <- seq(1, nrow(data_set))
+  data_set$record_number <- seq(1, nrow(data_set))
   glimpse(data_set)
   
   print("finding nulls in country field...")
