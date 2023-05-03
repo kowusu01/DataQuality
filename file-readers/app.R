@@ -98,7 +98,7 @@ fn_main <- function()
        else{
         for (f in data_files){
            
-           data = fnExploreAndSaveStats(f, db_connection)
+           data = fnLoadExploreAndSaveStats(f, db_connection)
            print(paste("Done loading ", f, " to db."))
     
   	       # next step: verify that all data have been loaded
