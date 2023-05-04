@@ -26,15 +26,15 @@ services:
     volumes:
       - 
          type: bind
-         source: /home/zkot2/app_data
+         source: /home/zkot2/app_data/fsreader/data
          target: /data
       - 
          type: bind
-         source: /home/zkot2/app_data/completed
+         source: /home/zkot2/app_data/fsreader/data/completed
          target: /data/completed           
       - 
          type: bind
-         source: /home/zkot2/app_data/bad
+         source: /home/zkot2/app_data/fsreader/data/bad
          target: /data/bad
       
     depends_on:
