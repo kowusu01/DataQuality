@@ -2,7 +2,7 @@
 -- connect to the database, i.e. set the current database to the one just created:
 \connect malariadb_dev;
 
-set AUTOCOMMIT ON;
+set AUTOCOMMIT on
 
 delete from data_issues_details;
 delete from cases_reported_bad;
