@@ -1,5 +1,3 @@
-
-
 library(config)
 
 fn_testConfiguration <- function()
