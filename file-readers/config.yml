@@ -1,0 +1,7 @@
+default:
+  db_name: "salariesdb_dev"
+  db_host: "dev.postgresdb.com"  
+  db_port: "5432"
+  db_userid:  "postgres"
+  db_pwd:  "postgrespw"
+  db_driver: "PostgreSQL"

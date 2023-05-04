@@ -17,13 +17,9 @@ services:
          type: bind
          source: /home/zkot2/postgres/dbfiles
          target: /var/lib/postgresql/data
-      -
-         type: bind
-         source: /home/zkot2/postgres/completedfiles
-         target: /home
   
   data-readers:
-    image: zkot2/file-reader.svc:v2
+    image: zkot2/file-reader.svc:v1
     #stdin_open: true # docker run -i
     #tty: true        # docker run -t
     container_name: app.fsreader.dev
@@ -31,15 +27,15 @@ services:
       - 
          type: bind
          source: /home/zkot2/app_data
-         target: /app_data
+         target: /data
       - 
          type: bind
          source: /home/zkot2/app_data/completed
-         target: /app_data/completed           
+         target: /data/completed           
       - 
          type: bind
          source: /home/zkot2/app_data/bad
-         target: /app_data/bad
+         target: /data/bad
       
     depends_on:
       - app-db
