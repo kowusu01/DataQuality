@@ -19,46 +19,46 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   
   
   # Add line number (record number to dataset)
-  print("adding line numbers to data...")
+  print(paste( Sys.time(), " - adding line numbers to data..."))
   data_set$record_number <- seq(1, nrow(data_set))
   glimpse(data_set)
   
-  print("finding nulls in country field...")
+  print(paste( Sys.time(), " - finding nulls in country field..."))
   country_is_na <- data_set[is.na(data_set$country), ]
   if (nrow(country_is_na) > 0){
     country_is_na <- country_is_na %>% select(record_number) %>% 
       mutate(column_name=rep('country', nrow(country_is_na)), issue=rep('country is null', nrow(country_is_na)))
   }
   
-  print ("finding nulls in year field....")
+  print (paste( Sys.time(), " - finding nulls in year field...."))
   year_is_na <- data_set[is.na(data_set$year), ]
   if (nrow(year_is_na) > 0){
     year_is_na <- year_is_na %>% select(record_number) %>% 
       mutate(column_name=rep('year', nrow(year_is_na)), issue=rep('year is null', nrow(year_is_na)))
   }
   
-  print("finding nulls in num_cases field...")
+  print(paste( Sys.time(), " - finding nulls in num_cases field..."))
   numcases_is_na <- data_set[is.na(data_set$num_cases), ]
   if (nrow(numcases_is_na) > 0){
     numcases_is_na <- numcases_is_na %>% select(record_number) %>% 
       mutate(column_name=rep('num_cases', nrow(numcases_is_na)), issue=rep('num_cases is null', nrow(numcases_is_na)))
   }
   
-  print ("finding nulls in num_deaths field...")
+  print (paste( Sys.time(), " - finding nulls in num_deaths field..."))
   numdeaths_is_na <- data_set[is.na(data_set$num_deaths), ]
   if (nrow(numdeaths_is_na) > 0){
     numdeaths_is_na <- numdeaths_is_na %>% select(record_number)  %>% 
       mutate(column_name=rep('num_deaths', nrow(numdeaths_is_na)), issue=rep('num_death is null', nrow(numdeaths_is_na)))
   }
   
-  print ("finding null in region field...")
+  print (paste( Sys.time(), " - finding null in region field..."))
   region_is_na <- data_set[is.na(data_set$region), ]
   if (nrow(region_is_na) > 0){
     numdeaths_is_na <- numdeaths_is_na %>% select(record_number)  %>% 
       mutate(column_name=rep('region', nrow(region_is_na)), issue=rep('region is null', nrow(region_is_na) ))
   }
   
-  print("finding inconsistent data...")
+  print(paste( Sys.time(), " - finding inconsistent data..."))
   data_set_complete_cases <- data_set[complete.cases(data_set), ]
   deaths_more_than_cases <- data_set_complete_cases %>% filter(num_deaths > num_cases)
   if (nrow(deaths_more_than_cases) > 0){
@@ -67,7 +67,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
              issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
   }
   
-  print ("creating issues deatails dataset")
+  print (paste( Sys.time(), " - creating issues deatails dataset"))
   issues_details<- country_is_na %>% rbind(year_is_na) %>% rbind(numcases_is_na) %>% rbind(numdeaths_is_na) %>% rbind(region_is_na)
   num_errors <- nrow(country_is_na) + 
     nrow(year_is_na) + 
@@ -78,7 +78,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
 
   num_warnings <- nrow(deaths_more_than_cases)
   
-  print ("analysis completed, creating dataset for db...")
+  print (paste( Sys.time(), " - analysis completed, creating dataset for db..."))
 
   # is we get this point it means the data load was successful
   is_success <- 'true'
@@ -96,9 +96,9 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   )
   
   
-  print ("Done creating datasets, attempting to save to db")
+  print (paste( Sys.time(), " - Done creating datasets, attempting to save to db"))
   
-  print("saving basic stats")
+  print(paste( Sys.time(), " - saving basic stats"))
   glimpse(basic_stats)
   fnSaveDataInDatabase(basic_stats, TABLE_LOAD_STATS, db_connection)
   
@@ -108,12 +108,11 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   load_id_df <- data.frame(load_id=c(load_ids))
   data_set_complete_cases <- load_id_df %>% cbind(data_set_complete_cases)
   
-  print ("saving good data...")
+  print (paste(Sys.time(), " - saving good data..."))
   glimpse(data_set_complete_cases)
   fnSaveDataInDatabase(data_set_complete_cases, TABLE_RECORDS_COMPLETE, db_connection)
 
-  
-  print ("saving bad data...")
+  print (paste(Sys.time(), " - saving bad data..."))
   bad_data <- data_set[!complete.cases(data_set), ]
   load_ids <- rep(df[1,1], nrow(bad_data))
   load_id_df <- data.frame(load_id=c(load_ids))
@@ -121,16 +120,13 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   glimpse(bad_data)
   fnSaveDataInDatabase(bad_data, TABLE_RECORDS_BAD, db_connection)
   
-  
-  print ("saving issues detail...")
+  print (paste( Sys.time(), " - saving issues detail..."))
   load_ids <- rep(df[1,1], nrow(issues_details))
   load_id_df <- data.frame(load_id=c(load_ids))
   issues_details <- load_id_df %>% cbind(issues_details)
   glimpse(issues_details)
   fnSaveDataInDatabase(issues_details, TABLE_ISSUES_DETAILS, db_connection)
   
-  #print ("Done saving all !!")
-
 }
 
 fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
