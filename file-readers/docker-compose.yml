@@ -27,15 +27,15 @@ services:
       - 
          type: bind
          source: /home/zkot2/app_data/fsreader/data
-         target: /data
+         target: /usr/local/src/fsreader/data
       - 
          type: bind
          source: /home/zkot2/app_data/fsreader/data/completed
-         target: /data/completed           
+         target: /usr/local/src/fsreader/data/completed           
       - 
          type: bind
          source: /home/zkot2/app_data/fsreader/data/bad
-         target: /data/bad
+         target: /usr/local/src/fsreader/data/bad
       
     depends_on:
       - app-db
