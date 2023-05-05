@@ -3,7 +3,7 @@ version: '3.7'
 services:
   app-db:
     image: zkot2/postgresdb:v1
-    container_name: db.postgres.dev
+    container_name: dev.postgres.db
     ports:
       - "4532:5432"
     networks:
@@ -22,7 +22,7 @@ services:
     image: zkot2/file-reader.svc:v1
     #stdin_open: true # docker run -i
     #tty: true        # docker run -t
-    container_name: app.fsreader.dev
+    container_name: dev.fsreader.app
     volumes:
       - 
          type: bind

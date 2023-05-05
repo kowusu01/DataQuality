@@ -86,7 +86,7 @@ fn_main <- function()
   tryCatch(
     {
       
-     db_connection = createConnection("PostgreSQL", MAIN_DB, "db.postgres.dev", 5432, "postgres", "postgrespw")
+     db_connection = createConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
      while (TRUE){
        
        data_files <- list.files(DATA_FOLDER_NAME, pattern = ".pdf|.csv")
