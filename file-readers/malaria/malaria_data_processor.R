@@ -88,7 +88,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   #err_message - NA
   
   basic_stats <- data.frame(
-    descr = c("test load 1"),
+    descr = c(paste("csv load for", data_file_path)),
     load_timestamp = c( now() ),
     file_path = c(data_file_path),
     load_status = final_load_status,
@@ -149,9 +149,25 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
   # sbSendQuery(con, "insert into table...")
 }
 
-fnSaveErrorToDB <- function(ex, db_connection){
+fnSaveErrorToDB <- function(data_file_path, ex, db_table, db_connection){
   
   if(DBI::dbIsValid(db_connection)){
     print("saving error message to db...")  
+    
+    error_stats <- data.frame(
+      descr = c(paste("csv load for", data_file_path)),
+      load_timestamp = c( now() ),
+      file_path = c(data_file_path),
+      load_status = "Error",
+      num_records = c(0),
+      bad_data_count = c(0),
+      warning_data_count = c(0),
+      error_message = c(ex)
+    )
+    dbWriteTable(db_connection, db_table, error_stats, row.names=FALSE, append=TRUE)
+    
+  }
+  else{
+    print("unable to save error information to db.")
   }
 }

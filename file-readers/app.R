@@ -55,7 +55,7 @@ fnReadFile <- function(file_name)
       data <- fnReadMalariaData(data_file_path, MALARIA_REPORTED_DATA_COL_HEADERS)
       completed_path <- paste0(COMPLETED_DATA_FOLDER, file_name)
       print (paste(Sys.time(), " - ", completed_path))
-      fs::file_move(data_file_path, completed_path)
+      #fs::file_move(data_file_path, completed_path)
       print (paste( Sys.time(), " - done reading csv file!"))
       return(data)
     }
@@ -82,13 +82,12 @@ fn_main <- function()
   #db_pwd    <- config$db_pwd
   
   #print(paste("db: ", db_driver, db_name, db_host, db_port, db_uid, db_pwd))
-  
+  db_connection = createConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
+  current_file <- ""
   tryCatch(
     {
       
-     db_connection = createConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
-     while (TRUE){
-       
+      while (TRUE){
        data_files <- list.files(DATA_FOLDER_NAME, pattern = ".pdf|.csv")
        print(paste( Sys.time(), " - number of files: ", length(data_files)))
       
@@ -97,19 +96,18 @@ fn_main <- function()
         }
        else{
         for (f in data_files){
+           current_file <- f
            data = fnLoadExploreAndSaveStats(f, db_connection)
-           print(paste("Done loading ", f, " to db."))
-    
-  	       # next step: verify that all data have been loaded
+           print(paste("Done loading file ", f, " to db."))
         }
       }
       Sys.sleep(60)
       }
     },
     error=function(ex){
-      print(paste( Sys.time(), " - ", ex))
+      print(paste( Sys.time(), " Error loading ", current_file, " : ", ex))
       if (DBI::dbIsValid(db_connection)){
-        fnSaveErrorToDB(ex)  
+        fnSaveErrorToDB(data_file_path, ex, TABLE_LOAD_STATS, db_connection)  
       }
       else{
         print(paste( Sys.time(), " - Unable to save error information to DB, connection object is not valid."))
