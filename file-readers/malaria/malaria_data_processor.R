@@ -66,7 +66,9 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   region_is_na <- data_set[is.na(data_set$region), ]
   if (nrow(region_is_na) > 0){
     region_is_na <- region_is_na %>% select(record_number)  %>% 
-      mutate(column_name=rep('region', nrow(region_is_na)), issue_type=rep(ISSUE_TYPE_ERROR, nrow(region_is_na)), issue=rep('region is null', nrow(region_is_na) ))
+      mutate(column_name=rep('region', nrow(region_is_na)), 
+             issue_type=rep(ISSUE_TYPE_ERROR, nrow(region_is_na)), 
+             issue=rep('region is null', nrow(region_is_na) ))
   }
   
   print(paste( Sys.time(), " - finding inconsistent data..."))
@@ -75,24 +77,25 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   if (nrow(deaths_more_than_cases) > 0){
     deaths_more_than_cases <- deaths_more_than_cases %>% select(record_number)  %>% 
       mutate(column_name=rep('num_deaths', nrow(deaths_more_than_cases)), 
-             issue_type=rep(ISSUE_TYPE_WARNING, nrow(deaths_more_than_cases)), issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
+             issue_type=rep(ISSUE_TYPE_WARNING, nrow(deaths_more_than_cases)), 
+             issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
   }
   
-  print("-----------------------------------------")
+  print("-------------- nulls in country column ----------------")
   glimpse(country_is_na)
   print("-----------------------------------------")
   
-  print("-----------------------------------------")
+  print("-------------- nulls in year---------------------------")
   glimpse(year_is_na)
   print("-----------------------------------------")
   
   
-  print("-----------------------------------------")
+  print("------------- nulls in num cases column ----------------------------")
   glimpse(numcases_is_na)
   print("-----------------------------------------")
   
   
-  print("-----------------------------------------")
+  print("-------------- nulls in num death column---------------------------")
   glimpse(numdeaths_is_na)
   print("-----------------------------------------")
   
