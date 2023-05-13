@@ -78,8 +78,27 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
              issue_type=rep(ISSUE_TYPE_WARNING, nrow(deaths_more_than_cases)), issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
   }
   
+  print("-----------------------------------------")
+  glimpse(country_is_na)
+  print("-----------------------------------------")
+  
+  print("-----------------------------------------")
+  glimpse(year_is_na)
+  print("-----------------------------------------")
+  
+  
+  print("-----------------------------------------")
+  glimpse(numcases_is_na)
+  print("-----------------------------------------")
+  
+  
+  print("-----------------------------------------")
+  glimpse(numdeaths_is_na)
+  print("-----------------------------------------")
+  
+  
   print (paste( Sys.time(), " - creating issues details dataset"))
-  issues_details<- country_is_na %>% 
+  issues_details <- country_is_na %>% 
     rbind(year_is_na) %>% 
     rbind(numcases_is_na) %>% 
     rbind(numdeaths_is_na) %>%
