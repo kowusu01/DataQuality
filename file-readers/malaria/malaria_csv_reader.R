@@ -4,7 +4,8 @@ fnReadMalariaData <- function(csv_data_path, col_headers){
   
   tryCatch( 
     {
-      csv_data <- read.csv(csv_data_path, col.names = col_headers)
+      #csv_data <- read.csv(csv_data_path, col.names = col_headers)
+      csv_data <- fread(csv_data_path, col.names = col_headers)
       return(csv_data)
       
     },
