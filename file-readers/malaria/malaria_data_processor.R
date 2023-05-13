@@ -30,28 +30,36 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   country_is_na <- data_set[is.na(data_set$country), ]
   if (nrow(country_is_na) > 0){
     country_is_na <- country_is_na %>% select(record_number) %>% 
-      mutate(column_name=rep('country', nrow(country_is_na)), issue_type=rep(ISSUE_TYPE_ERROR, nrow(country_is_na)), issue=rep('country is null', nrow(country_is_na)))
+      mutate(column_name=rep('country', nrow(country_is_na)), 
+             issue_type=rep(ISSUE_TYPE_ERROR, nrow(country_is_na)), 
+             issue=rep('country is null', nrow(country_is_na)))
   }
   
   print (paste( Sys.time(), " - finding nulls in year field...."))
   year_is_na <- data_set[is.na(data_set$year), ]
   if (nrow(year_is_na) > 0){
     year_is_na <- year_is_na %>% select(record_number) %>% 
-      mutate(column_name=rep('year', nrow(year_is_na)), issue_type=rep(ISSUE_TYPE_ERROR, rnow(year_is_na)), issue=rep('year is null', nrow(year_is_na)))
+      mutate(column_name=rep('year', nrow(year_is_na)), 
+             issue_type=rep(ISSUE_TYPE_ERROR, rnow(year_is_na)), 
+             issue=rep('year is null', nrow(year_is_na)))
   }
   
   print(paste( Sys.time(), " - finding nulls in num_cases field..."))
   numcases_is_na <- data_set[is.na(data_set$num_cases), ]
   if (nrow(numcases_is_na) > 0){
     numcases_is_na <- numcases_is_na %>% select(record_number) %>% 
-      mutate(column_name=rep('num_cases', nrow(numcases_is_na)), issue_type=rep(ISSUE_TYPE_ERROR, nrow(numcases_is_na)), issue=rep('num_cases is null', nrow(numcases_is_na)))
+      mutate(column_name=rep('num_cases', nrow(numcases_is_na)), 
+             issue_type=rep(ISSUE_TYPE_ERROR, nrow(numcases_is_na)), 
+             issue=rep('num_cases is null', nrow(numcases_is_na)))
   }
   
   print (paste( Sys.time(), " - finding nulls in num_deaths field..."))
   numdeaths_is_na <- data_set[is.na(data_set$num_deaths), ]
   if (nrow(numdeaths_is_na) > 0){
     numdeaths_is_na <- numdeaths_is_na %>% select(record_number)  %>% 
-      mutate(column_name=rep('num_deaths', nrow(numdeaths_is_na)), issue_type=rep(ISSUE_TYPE_ERROR, numdeaths_is_na), issue=rep('num_death is null', nrow(numdeaths_is_na)))
+      mutate(column_name=rep('num_deaths', nrow(numdeaths_is_na)), 
+             issue_type=rep(ISSUE_TYPE_ERROR, nrow(numdeaths_is_na)), 
+             issue=rep('num_death is null', nrow(numdeaths_is_na)))
   }
   
   print (paste( Sys.time(), " - finding null in region field..."))
@@ -67,11 +75,16 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   if (nrow(deaths_more_than_cases) > 0){
     deaths_more_than_cases <- deaths_more_than_cases %>% select(record_number)  %>% 
       mutate(column_name=rep('num_deaths', nrow(deaths_more_than_cases)), 
-             issue_type=ISSUE_TYPE_WARNING, issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
+             issue_type=rep(ISSUE_TYPE_WARNING, nrow(deaths_more_than_cases)), issue=rep('num_deaths is greater than num_cases', nrow(deaths_more_than_cases)))
   }
   
   print (paste( Sys.time(), " - creating issues details dataset"))
-  issues_details<- country_is_na %>% rbind(year_is_na) %>% rbind(numcases_is_na) %>% rbind(numdeaths_is_na) %>% rbind(region_is_na)
+  issues_details<- country_is_na %>% 
+    rbind(year_is_na) %>% 
+    rbind(numcases_is_na) %>% 
+    rbind(numdeaths_is_na) %>%
+    rbind(region_is_na)
+  
   num_errors <- nrow(country_is_na) + 
     nrow(year_is_na) + 
     nrow(year_is_na) +
