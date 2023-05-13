@@ -82,7 +82,7 @@ fn_main <- function()
   #db_pwd    <- config$db_pwd
   
   #print(paste("db: ", db_driver, db_name, db_host, db_port, db_uid, db_pwd))
-  db_connection = createConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
+  db_connection <- createConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
   current_file <- ""
   tryCatch(
     {
