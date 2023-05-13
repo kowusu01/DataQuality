@@ -99,13 +99,39 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   glimpse(numdeaths_is_na)
   print("-----------------------------------------")
   
-  
+  issues_details <- data.frame()
+
   print (paste( Sys.time(), " - creating issues details dataset"))
-  issues_details <- country_is_na %>% 
-    rbind(year_is_na) %>% 
-    rbind(numcases_is_na) %>% 
-    rbind(numdeaths_is_na) %>%
-    rbind(region_is_na)
+  
+  # attempt to add list of country field errors
+  if (nrow(country_is_na) > 0)
+    issues_details <- issues_details %>% rbind(country_is_na)
+  
+  # attempt to add list of nulls in year column
+  if (nrow(year_is_na))
+    issues_details <- issues_details %>% rbind(year_is_na)
+  
+  # errors in deaths column
+  if(nrow(numcases_is_na))
+    issues_details <- issues_details %>% rbind(numcases_is_na)
+  
+  # errors in deaths column
+  if(nrow(numdeaths_is_na))
+    issues_details <- issues_details %>% rbind(numdeaths_is_na)
+  
+  # errors in region column
+  if(nrow(region_is_na))
+      issues_details <- issues_details %>% rbind(region_is_na)
+    
+  # warning for inconsistent between numcases and num deaths
+  if (nrow(deaths_more_than_cases) > 0)
+    issues_details <- issues_details %>% rbind(deaths_more_than_cases)
+    
+  #issues_details <- country_is_na %>% 
+  #  rbind(year_is_na) %>% 
+  #  rbind(numcases_is_na) %>% 
+  #  rbind(numdeaths_is_na) %>%
+  #  rbind(region_is_na)
   
   num_errors <- nrow(country_is_na) + 
     nrow(year_is_na) + 
