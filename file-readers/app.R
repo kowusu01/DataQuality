@@ -108,6 +108,10 @@ fn_main <- function()
       print(paste( Sys.time(), " Error loading ", current_file, " : ", ex))
       error_msg <- paste("Exception loading ", current_file, " : ", ex)
       fnSaveErrorToDB(current_file, error_msg, TABLE_LOAD_STATS, db_connection)
+      
+      # remove bad file
+      completed_path <- paste0(COMPLETED_DATA_FOLDER, file_name)
+      fs::file_move(data_file_path, paste0(COMPLETED_DATA_FOLDER, current_file))
     },
     finally = function(){
       DBI::dbDisconnect(db_connection)
