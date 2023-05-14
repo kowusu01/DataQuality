@@ -166,7 +166,7 @@ fnLoadExploreAndSaveStats <- function(data_file_path, db_connection){
   fnSaveDataInDatabase(basic_stats, TABLE_LOAD_STATS, db_connection)
   
   # load the load_id record just saved
-  df <- dbGetQuery(db_connection, paste0("SELECT load_id from load_stats where file_path='", data_file_path, "'") )
+  df <- dbGetQuery(db_connection, paste0("SELECT id from load_stats where file_path='", data_file_path, "'") )
   load_ids <- rep(df[1,1], nrow(data_set_complete_cases))
   load_id_df <- data.frame(load_id=c(load_ids))
   data_set_complete_cases <- load_id_df %>% cbind(data_set_complete_cases)
