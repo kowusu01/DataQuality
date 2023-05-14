@@ -211,17 +211,20 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
 }
 
 fnSaveErrorToDB <- function(data_file_path, ex, db_table, db_connection){
-    print("saving error message to db...")  
+    
+  print("saving error message to db...")  
     
     error_stats <- data.frame(
       descr = c(paste("csv load for", data_file_path)),
       load_timestamp = c( now() ),
       file_path = c(data_file_path),
-      load_status = "Error",
+      load_status = c("Error"),
       num_records = c(0),
       bad_data_count = c(0),
       warning_data_count = c(0),
       error_message = c(ex)
     )
+    glimpse(error_stats)
+    
     dbWriteTable(db_connection, db_table, error_stats, row.names=FALSE, append=TRUE)
 }
