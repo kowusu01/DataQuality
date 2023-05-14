@@ -55,7 +55,7 @@ fnReadFile <- function(file_name)
       data <- fnReadMalariaData(data_file_path, MALARIA_REPORTED_DATA_COL_HEADERS)
       completed_path <- paste0(COMPLETED_DATA_FOLDER, file_name)
       print (paste(Sys.time(), " - ", completed_path))
-      #fs::file_move(data_file_path, completed_path)
+      fs::file_move(data_file_path, completed_path)
       print (paste( Sys.time(), " - done reading csv file!"))
       return(data)
     }
