@@ -110,8 +110,9 @@ fn_main <- function()
       fnSaveErrorToDB(current_file, error_msg, TABLE_LOAD_STATS, db_connection)
       
       # remove bad file
-      data_file_path <- paste0(COMPLETED_DATA_FOLDER, current_file)
-      fs::file_move(data_file_path)
+      current_file_path <- paste0(DATA_FOLDER_NAME,current_file)
+      completed_files_path <- paste0(COMPLETED_DATA_FOLDER, current_file)
+      fs::file_move(current_file_path, completed_files_path)
     },
     finally = function(){
       DBI::dbDisconnect(db_connection)
