@@ -210,19 +210,19 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
   # sbSendQuery(con, "insert into table...")
 }
 
-fnSaveErrorToDB <- function(data_file_path, ex, db_table, db_connection){
+fnSaveErrorToDB <- function(data_file_path, error_msg, db_table, db_connection){
     
   print("saving error message to db...")  
     
     error_stats <- data.frame(
-      descr = c(paste("csv load for", data_file_path)),
-      load_timestamp = c( now() ),
-      file_path = c(data_file_path),
-      load_status = c("Error"),
-      num_records = c(0),
-      bad_data_count = c(0),
-      warning_data_count = c(0),
-      error_message = c(ex)
+      descr = paste("csv load for ", data_file_path),
+      load_timestamp = now(),
+      file_path = data_file_path,
+      load_status = "Error",
+      num_records = 0,
+      bad_data_count = 0,
+      warning_data_count = 0,
+      error_message = error_msg
     )
     glimpse(error_stats)
     
