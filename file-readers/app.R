@@ -106,7 +106,7 @@ fn_main <- function()
     },
     error=function(ex){
       print(paste( Sys.time(), " Error loading ", current_file, " : ", ex))
-      fnSaveErrorToDB(data_file_path, ex, TABLE_LOAD_STATS, db_connection)
+      fnSaveErrorToDB(current_file, ex, TABLE_LOAD_STATS, db_connection)
     },
     finally = function(){
       DBI::dbDisconnect(db_connection)
