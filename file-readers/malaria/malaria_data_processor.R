@@ -211,8 +211,6 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
 }
 
 fnSaveErrorToDB <- function(data_file_path, ex, db_table, db_connection){
-  
-  if(DBI::dbIsValid(db_connection)){
     print("saving error message to db...")  
     
     error_stats <- data.frame(
@@ -226,9 +224,4 @@ fnSaveErrorToDB <- function(data_file_path, ex, db_table, db_connection){
       error_message = c(ex)
     )
     dbWriteTable(db_connection, db_table, error_stats, row.names=FALSE, append=TRUE)
-    
-  }
-  else{
-    print("unable to save error information to db.")
-  }
 }

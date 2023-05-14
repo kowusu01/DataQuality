@@ -106,12 +106,7 @@ fn_main <- function()
     },
     error=function(ex){
       print(paste( Sys.time(), " Error loading ", current_file, " : ", ex))
-      if (DBI::dbIsValid(db_connection)){
-        fnSaveErrorToDB(data_file_path, ex, TABLE_LOAD_STATS, db_connection)  
-      }
-      else{
-        print(paste( Sys.time(), " - Unable to save error information to DB, connection object is not valid."))
-      }
+      fnSaveErrorToDB(data_file_path, ex, TABLE_LOAD_STATS, db_connection)
     },
     finally = function(){
       DBI::dbDisconnect(db_connection)
