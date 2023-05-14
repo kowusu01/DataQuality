@@ -44,10 +44,12 @@ fnReadFile <- function(file_name)
   print(paste("current file is: ", data_file_path))
   
   if (str_detect(file_name, ".pdf$")){
+    
       print(paste( Sys.time(), " - processing .pdf file..."))
       data <- fnReadAndProcessPdfFile(data_file_path)
       fs::file_move(data_file_path, paste0(COMPLETED_DATA_FOLDER, file_name))
-      return(data)
+      
+      #return(data)
     }
   else if (str_detect(file_name, ".csv$")){
     
@@ -57,7 +59,8 @@ fnReadFile <- function(file_name)
       print (paste(Sys.time(), " - ", completed_path))
       fs::file_move(data_file_path, completed_path)
       print (paste( Sys.time(), " - done reading csv file!"))
-      return(data)
+      
+      #return(data)
     }
   else{
     print( paste0( Sys.time(), " - file: ", file_name, " not a supported file type."))
@@ -96,23 +99,32 @@ fn_main <- function()
         }
        else{
         for (f in data_files){
-           current_file <- f
-           data = fnLoadExploreAndSaveStats(f, db_connection)
-           print(paste("Done loading file ", f, " to db."))
+           tryCatch(
+             {
+                print(paste("processing file : ", f))
+                fnLoadExploreAndSaveStats(f, db_connection)
+                print(paste("Done loading file ", f, " to db."))
+             },
+             error=function(ex){
+               
+               print(paste( Sys.time(), " Error loading ", f, " : ", ex))
+               error_msg <- paste("Exception loading ", f, " : ", ex)
+               fnSaveErrorToDB(f, error_msg, TABLE_LOAD_STATS, db_connection)
+               
+               # remove bad file
+               current_file_path <- paste0(DATA_FOLDER_NAME, f)
+               completed_files_path <- paste0(COMPLETED_DATA_FOLDER, f)
+               fs::file_move(current_file_path, completed_files_path)
+               
+             }
+           )
         }
       }
       Sys.sleep(60)
       }
     },
     error=function(ex){
-      print(paste( Sys.time(), " Error loading ", current_file, " : ", ex))
-      error_msg <- paste("Exception loading ", current_file, " : ", ex)
-      fnSaveErrorToDB(current_file, error_msg, TABLE_LOAD_STATS, db_connection)
-      
-      # remove bad file
-      current_file_path <- paste0(DATA_FOLDER_NAME,current_file)
-      completed_files_path <- paste0(COMPLETED_DATA_FOLDER, current_file)
-      fs::file_move(current_file_path, completed_files_path)
+      print(paste("something bad happended: ", ex))
     },
     finally = function(){
       DBI::dbDisconnect(db_connection)
@@ -130,3 +142,6 @@ fn_main <- function()
 result <- fn_main()
 
 # end of file
+
+
+
