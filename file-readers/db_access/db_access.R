@@ -34,7 +34,7 @@ getLoadStatsId <- function(db_connection){
   }
 
   fnLogMessage(paste0(FILE_DB_ACCESS, ".", CURRENT_FUNCTION, " - loading load_stats_id from db."))
-  df <- DBI::dbGetQuery(db_connection, paste0("SELECT id from load_stats where file_path='", data_file_path, "'") )
+  df <- DBI::dbGetQuery(db_connection, "SELECT currval('load_stats_id_seq')" )
   return (df[1,1]) # return the primary key
 }
 

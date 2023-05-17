@@ -32,7 +32,7 @@ create table load_stats (
   num_records integer not null,
   bad_data_count integer not null default 0, 
   warning_data_count integer default 0,
-  error_message varchar(255)
+  error_message varchar
 );
 
 
