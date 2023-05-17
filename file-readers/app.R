@@ -13,13 +13,16 @@
 
 source("load_base_packages.R")
 source("db_access/db_access.R")
-source("malaria/malaria_csv_reader.R")
-source("malaria/malaria_data_processor.R")
+source("malaria/data_explorer.R")
+source("malaria/data_processor.R")
 
 #DATA_FOLDER_NAME <- "/home/app_data/"
 #COMPLETED_DATA_FOLDER <- "/home/app_data/completed/"
 #BAD_DATA_FOLDER <- "/home/app_data/bad/"
 
+
+FULL_DEBUG <- TRUE
+IN_TEST_MODE <- FALSE
 
 DATA_FOLDER_NAME <- "data/"
 COMPLETED_DATA_FOLDER <- "data/completed/"
@@ -32,48 +35,32 @@ TABLE_RECORDS_BAD <- "cases_reported_bad"
 TABLE_ISSUES_DETAILS <- "data_issues_details"
 
 
+ISSUE_TYPE_ERROR <- "Error"
+ISSUE_TYPE_WARNING <- "Warning"
+
+
 # malaria dataset
 MALARIA_REPORTED_DATA_COL_HEADERS <- c("country", "year","num_cases","num_deaths","region")
 MALARIAL_REPORTED_DATA_DB_TABLE <- "reported_data"
 
-fnReadFile <- function(file_name)
-{
-  print (paste( Sys.time(), " - in function fnReadFile()..."))
-  
-  data_file_path <- paste0(DATA_FOLDER_NAME,file_name)
-  print(paste("current file is: ", data_file_path))
-  
-  if (str_detect(file_name, ".pdf$")){
-    
-      print(paste( Sys.time(), " - processing .pdf file..."))
-      data <- fnReadAndProcessPdfFile(data_file_path)
-      fs::file_move(data_file_path, paste0(COMPLETED_DATA_FOLDER, file_name))
-      
-      #return(data)
-    }
-  else if (str_detect(file_name, ".csv$")){
-    
-      print(paste(Sys.time(), " - processing .csv file..."))
-      data <- fnReadMalariaData(data_file_path, MALARIA_REPORTED_DATA_COL_HEADERS)
-      completed_path <- paste0(COMPLETED_DATA_FOLDER, file_name)
-      print (paste(Sys.time(), " - ", completed_path))
-      fs::file_move(data_file_path, completed_path)
-      print (paste( Sys.time(), " - done reading csv file!"))
-      
-      #return(data)
-    }
-  else{
-    print( paste0( Sys.time(), " - file: ", file_name, " not a supported file type."))
-    bad_data_path <- paste0(BAD_DATA_FOLDER, file_name)
-    print (bad_data_path )
-    fs::file_move(data_file_path, bad_data_path)
-  }
+FILE_APP <- "app.R"
+
+################################################################################
+## log message
+################################################################################
+fnLogMessage <- function(msg){
+  print(paste(Sys.time(), "-", msg))
 }
 
 
-
-fn_main <- function()
+################################################################################
+## main
+################################################################################
+fnMain <- function()
 {
+  
+  CURRENT_FUNCTION <- "fnMain()"
+  
   #config <- config::get()
   
   ## db stuff
@@ -84,52 +71,39 @@ fn_main <- function()
   #db_uid    <- config$db_userid
   #db_pwd    <- config$db_pwd
   
+  
   #print(paste("db: ", db_driver, db_name, db_host, db_port, db_uid, db_pwd))
-  db_connection <- createConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
-  current_file <- ""
+  
   tryCatch(
     {
-      
       while (TRUE){
-       data_files <- list.files(DATA_FOLDER_NAME, pattern = ".pdf|.csv")
-       print(paste( Sys.time(), " - number of files: ", length(data_files)))
+       data_files <- list.files(DATA_FOLDER_NAME, pattern = ".csv")
+       fnLogMessage(paste0(FILE_APP, ".", CURRENT_FUNCTION, " - number of csv files found: ", length(data_files)))
       
        if (length(data_files)==0){
-         print(paste( Sys.time(), " - no data found."))
+         fnLogMessage(paste0(FILE_APP, ".", CURRENT_FUNCTION, " - no data found."))
         }
        else{
-        for (f in data_files){
-           tryCatch(
-             {
-                print(paste("processing file : ", f))
-                fnLoadExploreAndSaveStats(f, db_connection)
-                print(paste("Done loading file ", f, " to db."))
-             },
-             error=function(ex){
-               
-               print(paste( Sys.time(), " Error loading ", f, " : ", ex))
-               error_msg <- paste("Exception loading ", f, " : ", ex)
-               fnSaveErrorToDB(f, error_msg, TABLE_LOAD_STATS, db_connection)
-               
-               # remove bad file
-               current_file_path <- paste0(DATA_FOLDER_NAME, f)
-               completed_files_path <- paste0(COMPLETED_DATA_FOLDER, f)
-               fs::file_move(current_file_path, completed_files_path)
-               
-             }
-           )
-        }
-      }
-      Sys.sleep(60)
+         for (f in data_files){
+           fnLogMessage(paste0(FILE_APP, ".", CURRENT_FUNCTION, " --------------------------------------------------------------------------"))
+           fnLogMessage(paste0(FILE_APP, ".", CURRENT_FUNCTION, " - processing file : ", f))
+           fnProcessDataset(f)
+           
+           data_file_path <- paste0(DATA_FOLDER_NAME, f)
+           completed_path <- paste0(COMPLETED_DATA_FOLDER, f)
+           fs::file_move(data_file_path, completed_path)
+           
+           fnLogMessage(paste0(FILE_APP, ".", CURRENT_FUNCTION, " - done loading file ", f, " to db."))
+           fnLogMessage(paste0(FILE_APP, ".", CURRENT_FUNCTION, " --------------------------------------------------------------------------"))
+         }
+       }
+       Sys.sleep(60)
       }
     },
     error=function(ex){
-      print(paste("something bad happended: ", ex))
-    },
-    finally = function(){
-      DBI::dbDisconnect(db_connection)
-    }
-  )
+      error_msg <- paste(FILE_APP, ".", CURRENT_FUNCTION, " - exception :", ex)
+      fnLogMessage(error_msg)
+    })
 }
 
 
@@ -139,7 +113,7 @@ fn_main <- function()
 #
 ################################################################################
 
-result <- fn_main()
+result <- fnMain()
 
 # end of file
 
