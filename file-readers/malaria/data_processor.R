@@ -288,7 +288,12 @@ fnProcessDataset <- function(file_name){
           
           ## COMMIT TRANS
           fnLogMessage(paste0(FILE_DATA_PROCESSOR, ".", CURRENT_FUNCTION, " - commiting transaction for all other datasets"))
+          
+          # update load_stats status to Completed
+          fnUpdateLoadStatus(db_connection, "Completed")
+          
           fnCommitTransaction(db_connection)
+          
          
         },
         error=function(ex){ 
@@ -299,10 +304,6 @@ fnProcessDataset <- function(file_name){
           # in case of error, rollback, then update the load_stats record status to Error
           fnRollbackTransaction(db_connection)
           fnSaveErrorToDB(file_name, error_msg, TABLE_LOAD_STATS, db_connection, load_stats_id)
-          
-          # update load_stats status to Completed
-          fnUpdateLoadStatus(db_connection, "Completed")
-          
         },
         finally={
           fnCloseConnection(db_connection)
