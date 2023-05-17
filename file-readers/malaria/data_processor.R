@@ -76,8 +76,6 @@ fnProcessDataset <- function(file_name){
         
         # do not rollback the load_stats record
         fnSaveErrorToDB(file_name, error_msg, TABLE_LOAD_STATS, db_connection)
-      },
-      finally={
         fnCloseConnection(db_connection)
       }) # try catch #1
 
@@ -127,8 +125,6 @@ fnProcessDataset <- function(file_name){
         fnLogMessage(error_msg)
         fnRollbackTransaction(db_connection)
         fnSaveErrorToDB(file_name, error_msg, TABLE_LOAD_STATS, db_connection)
-      },
-      finally={
         fnCloseConnection(db_connection)
       }) #  try catch #2
       
@@ -180,8 +176,6 @@ fnProcessDataset <- function(file_name){
           
           fnRollbackTransaction(db_connection)
           fnSaveErrorToDB(file_name, error_msg, TABLE_LOAD_STATS, db_connection)
-        },
-        finally={
           fnCloseConnection(db_connection)
         }) #  try catch #3
         
@@ -238,8 +232,6 @@ fnProcessDataset <- function(file_name){
           
           fnRollbackTransaction(db_connection)
           fnSaveErrorToDB(file_name, error_msg, TABLE_LOAD_STATS, db_connection)
-        },
-        finally={
           fnCloseConnection(db_connection)
         }) #  try catch #4
         
