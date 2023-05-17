@@ -247,7 +247,7 @@ fnProcessDataset <- function(file_name){
           
           data_set_complete_cases <- data_set[complete.cases(data_set), ]
           fnLogMessage(paste0(FILE_DATA_PROCESSOR, ".", CURRENT_FUNCTION, " - loading load_stats id from db..."))
-          load_stats_id <- getLoadStatsId(db_connection)
+          load_stats_id <- fnGetLoadStatsId(db_connection)
           fnLogMessage(paste0(FILE_DATA_PROCESSOR, ".", CURRENT_FUNCTION, " - done loading load_stats id from db"))
           
 
@@ -300,6 +300,9 @@ fnProcessDataset <- function(file_name){
           fnRollbackTransaction(db_connection)
           fnSaveErrorToDB(file_name, error_msg, TABLE_LOAD_STATS, db_connection, load_stats_id)
           
+          # update load_stats status to Completed
+          fnUpdateLoadStatus(db_connection, "Completed")
+          
         },
         finally={
           fnCloseConnection(db_connection)
@@ -317,15 +320,6 @@ fnSaveDataInDatabase <- function(data_set, db_table, db_connection)
     dbWriteTable(db_connection, db_table, data_set, row.names=FALSE, append=TRUE)
   else
     fnLogMessage(paste0(FILE_DATA_PROCESSOR, ".", CURRENT_FUNCTION, " - db connection is null, data not saved to db"))
-  
-  
-  # dbWriteTable(con, "MyTable", df, row.names=FALSE, append=TRUE)
-  #df <- dbGetQuery(db_connection, "SELECT * FROM env_info")
-  #df
-  #df <- dbGetQuery(db_connection, paste("SELECT COUNT(*) FROM ", TABLE_LOAD_STATS) )
-  #df
-  # other commands
-  # sbSendQuery(con, "insert into table...")
 }
 
 
@@ -371,7 +365,7 @@ fnSaveErrorToDB <- function(data_file_path, error_msg, db_table, db_connection, 
     }
     
     if (!is.na(db_connection)){
-      DBI::dbSendQuery(db_connection)
+      DBI::dbSendQuery(db_connection, query)
     }
     
   }

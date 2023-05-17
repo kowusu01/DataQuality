@@ -24,7 +24,7 @@ fnCreateConnection <- function(my_db_driver, my_db_name, my_db_host, my_db_port,
    return(con)
 }
 
-getLoadStatsId <- function(db_connection){
+fnGetLoadStatsId <- function(db_connection){
   
   CURRENT_FUNCTION <- "getLoadStatsId()"
   
@@ -36,6 +36,17 @@ getLoadStatsId <- function(db_connection){
   fnLogMessage(paste0(FILE_DB_ACCESS, ".", CURRENT_FUNCTION, " - loading load_stats_id from db."))
   df <- DBI::dbGetQuery(db_connection, "SELECT currval('load_stats_id_seq')" )
   return (df[1,1]) # return the primary key
+}
+
+fnUpdateLoadStatus <- function(db_connection, status){
+  
+  CURRENT_FUNCTION <- "fnUpdateLoadStatus()"
+  
+  if (!IN_TEST_MODE){
+    current_load_id <- fnGetLoadStatsId(db_connection)
+    DBI::dbSendQuery(db_connection, paste0("update load_stats set load_status='", status, "' where id=", current_load_id) )    
+  }
+  fnLogMessage(paste0(FILE_DB_ACCESS, ".", CURRENT_FUNCTION, " - status for current load updated to ", status)) 
 }
 
 fnBeginTransaction <- function(db_connection){
