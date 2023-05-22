@@ -160,3 +160,6 @@ cython_debug/
 #.idea/
 .Rproj.user
 file-readers/.Rhistory
+file-readers/.RData
+file-readers/.Rhistory
+file-readers/.Rhistory

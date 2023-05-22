@@ -17,15 +17,6 @@ source("malaria/utils.R")
 source("malaria/data_explorer.R")
 source("malaria/data_processor.R")
 
-env_db_info <- paste0("ENVIRONMENT INFO - db_diver: ", DB_DRIVER, " db_server: ", DB_SERVER_NAME , " port: ", DB_PORT, " db_instance: ", DB_INSTANCE, " user: ", DB_USER," pw: ", DB_PASSWORD )
-if (FULL_DEBUG && IN_TEST_MODE)
-  fnLogMessage(env_db_info)
-
-env_data_path_info <- paste0("DATA PATH INFO - data folder: [", DATA_FOLDER_NAME, "], completed data folder: [", COMPLETED_DATA_FOLDER , "], bad data folder: [", BAD_DATA_FOLDER, "]")
-if (FULL_DEBUG && IN_TEST_MODE)
-  fnLogMessage(env_data_path_info)
-
-  
 FILE_APP <- "app.R"
 
 ################################################################################
