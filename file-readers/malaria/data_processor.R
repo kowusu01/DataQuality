@@ -38,7 +38,8 @@ fnProcessDataset <- function(file_name){
   load_stats_id <- NA
   error_status <- NA
   
-  db_connection <- fnCreateConnection("PostgreSQL", MAIN_DB, "dev.postgres.db", 5432, "postgres", "postgrespw")
+
+  db_connection <- fnCreateConnection(DB_DRIVER, DB_INSTANCE, DB_SERVER_NAME, DB_PORT, DB_USER, DB_PASSWORD)
   
   country_is_na <- NA
   year_is_na <- NA

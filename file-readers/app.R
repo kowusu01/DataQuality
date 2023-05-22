@@ -22,13 +22,27 @@ source("malaria/data_processor.R")
 
 
 FULL_DEBUG <- TRUE
-IN_TEST_MODE <- FALSE
+IN_TEST_MODE <- TRUE
 
 DATA_FOLDER_NAME <- "data/"
 COMPLETED_DATA_FOLDER <- "data/completed/"
 BAD_DATA_FOLDER <- "data/bad/"
 
-MAIN_DB <- "malariadb_dev"
+
+# using environment variables
+DB_DRIVER <- Sys.getenv("PostgresDriver")
+DB_SERVER_NAME <- Sys.getenv("DBServerName")
+DB_INSTANCE <- Sys.getenv("DBInstance")
+DB_PORT <- Sys.getenv("DBPort")
+DB_USER<- Sys.getenv("DBUsername")
+DB_PASSWORD <- Sys.getenv("DBPassword")
+
+env_info <- paste0("ENVIRONMENT INFO - db_diver: ", DB_DRIVER, " db_server: ", DB_SERVER_NAME , " port: ", DB_PORT, " db_instance: ", DB_INSTANCE, " user: ", DB_USER," pw: ", DB_PASSWORD )
+if (FULL_DEBUG && IN_TEST_MODE)
+  fnLogMessage(env_info)
+  
+  
+
 TABLE_LOAD_STATS <- "load_stats"
 TABLE_RECORDS_COMPLETE <- "cases_reported_complete"
 TABLE_RECORDS_BAD <- "cases_reported_bad"
