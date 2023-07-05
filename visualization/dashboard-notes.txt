@@ -1,0 +1,39 @@
+slack
+https://app.slack.com/client/T01HBMYM59V/C038FFU79J5/thread/C01TN0DPBS6-1681480220.432089
+
+Dash and Plotly Notes
+
+Major Resource
+- Interactive web-based data visualization with R, plotly, and shiny
+- Carson Sievert, 2019-12-19
+
+multi page app 
+- https://www.youtube.com/watch?v=RMBSQ6leonU
+
+deploy to aws
+https://austinlasseter.medium.com/deploying-a-dash-app-with-elastic-beanstalk-console-27a834ebe91d
+
+Plotly R
+https://plotly-r.com/arranging-views.html#arranging-plotly-objects
+
+styling
+- https://sakizo-blog.com/en/642/
+
+Bookdown
+- https://bookdown.org/yihui/blogdown/a-quick-deploy.html#use-netlify-drop
+
+
+Docker Images
+- https://colinfay.me/docker-r-reproducibility/
+- https://www.r-bloggers.com/2021/05/best-practices-for-r-with-docker/
+
+Shiny and Docker
+https://hosting.analythium.io/dockerized-shiny-apps-with-dependencies/#use-the-renv-r-package
+
+
+Deploy Dash to Render using DashTools
+- https://www.youtube.com/watch?v=XWJBJoV5yww
+- https://www.youtube.com/watch?v=H16dZMYmvqo&t=54s 
+----------------------------------------------------------------------------------------------
+
+Starting Dash - Python

@@ -1,0 +1,161 @@
+country,who-region-name,who-region-code,alpha-2-code,alpha-3-code,numeric-code
+Algeria,African Region,AFR,DZ,DZA,012
+Angola,African Region,AFR,AO,AGO,024
+Benin,African Region,AFR,BJ,BEN,204
+Botswana,African Region,AFR,BW,BWA,072
+Burkina Faso,African Region,AFR,BF,BFA,854
+Burundi,African Region,AFR,BI,BDI,108
+Cameroon,African Region,AFR,CM,CMR,120
+Chad,African Region,AFR,TD,TCD,148
+Equatorial Guinea,African Region,AFR,GQ,GNQ,226
+Eritrea,African Region,AFR,ER,ERI,232
+Ethiopia,African Region,AFR,ET,ETH,231
+Gabon,African Region,AFR,GA,GAB,266
+Ghana,African Region,AFR,GH,GHA,288
+Guinea,African Region,AFR,GN,GIN,324
+Guinea-Bissau,African Region,AFR,GW,GNB,624
+Kenya,African Region,AFR,KE,KEN,404
+Lesotho,African Region,AFR,LS,LSO,426
+Liberia,African Region,AFR,LR,LBR,430
+Madagascar,African Region,AFR,MG,MDG,450
+Malawi,African Region,AFR,MW,MWI,454
+Mali,African Region,AFR,ML,MLI,466
+Mauritania,African Region,AFR,MR,MRT,478
+Mauritius,African Region,AFR,MU,MUS,480
+Mozambique,African Region,AFR,MZ,MOZ,508
+Namibia,African Region,AFR,NA,NAM,516
+Nigeria,African Region,AFR,NG,NGA,566
+Rwanda,African Region,AFR,RW,RWA,646
+Senegal,African Region,AFR,SN,SEN,686
+Seychelles,African Region,AFR,SC,SYC,690
+Sierra Leone,African Region,AFR,SL,SLE,694
+South Africa,African Region,AFR,ZA,ZAF,710
+South Sudan,African Region,AFR,SS,SSD,728
+Eswatini,African Region,AFR,SZ,SWZ,748
+Togo,African Region,AFR,TG,TGO,768
+Uganda,African Region,AFR,UG,UGA,800
+Zambia,African Region,AFR,ZM,ZMB,894
+Zimbabwe,African Region,AFR,ZW,ZWE,716
+Antigua and Barbuda,Region of the Americas,AMR,AG,ATG,028
+Argentina,Region of the Americas,AMR,AR,ARG,032
+Barbados,Region of the Americas,AMR,BB,BRB,052
+Belize,Region of the Americas,AMR,BZ,BLZ,084
+Brazil,Region of the Americas,AMR,BR,BRA,076
+Canada,Region of the Americas,AMR,CA,CAN,124
+Chile,Region of the Americas,AMR,CL,CHL,152
+Colombia,Region of the Americas,AMR,CO,COL,170
+Costa Rica,Region of the Americas,AMR,CR,CRI,188
+Cuba,Region of the Americas,AMR,CU,CUB,192
+Dominica,Region of the Americas,AMR,DM,DMA,212
+Ecuador,Region of the Americas,AMR,EC,ECU,218
+El Salvador,Region of the Americas,AMR,SV,SLV,222
+Grenada,Region of the Americas,AMR,GD,GRD,308
+Guatemala,Region of the Americas,AMR,GT,GTM,320
+Guyana,Region of the Americas,AMR,GY,GUY,328
+Haiti,Region of the Americas,AMR,HT,HTI,332
+Honduras,Region of the Americas,AMR,HN,HND,340
+Jamaica,Region of the Americas,AMR,JM,JAM,388
+Mexico,Region of the Americas,AMR,MX,MEX,484
+Nicaragua,Region of the Americas,AMR,NI,NIC,558
+Panama,Region of the Americas,AMR,PA,PAN,591
+Paraguay,Region of the Americas,AMR,PY,PRY,600
+Peru,Region of the Americas,AMR,PE,PER,604
+Saint Kitts and Nevis,Region of the Americas,AMR,KN,KNA,659
+Saint Lucia,Region of the Americas,AMR,LC,LCA,662
+Saint Vincent and the Grenadines,Region of the Americas,AMR,VC,VCT,670
+Suriname,Region of the Americas,AMR,SR,SUR,740
+Trinidad and Tobago,Region of the Americas,AMR,TT,TTO,780
+Uruguay,Region of the Americas,AMR,UY,URY,858
+Bangladesh,South-East Asian Region,SEAR,BD,BGD,050
+Bhutan,South-East Asian Region,SEAR,BT,BTN,064
+India,South-East Asian Region,SEAR,IN,IND,356
+Indonesia,South-East Asian Region,SEAR,ID,IDN,360
+Maldives,South-East Asian Region,SEAR,MV,MDV,462
+Myanmar,South-East Asian Region,SEAR,MM,MMR,104
+Nepal,South-East Asian Region,SEAR,NP,NPL,524
+Sri Lanka,South-East Asian Region,SEAR,LK,LKA,144
+Thailand,South-East Asian Region,SEAR,TH,THA,764
+Timor-Leste,South-East Asian Region,SEAR,TL,TLS,626
+Albania,European Region,EUR,AL,ALB,008
+Andorra,European Region,EUR,AD,AND,020
+Armenia,European Region,EUR,AM,ARM,051
+Austria,European Region,EUR,AT,AUT,040
+Azerbaijan,European Region,EUR,AZ,AZE,031
+Belarus,European Region,EUR,BY,BLR,112
+Belgium,European Region,EUR,BE,BEL,056
+Bosnia and Herzegovina,European Region,EUR,BA,BIH,070
+Bulgaria,European Region,EUR,BG,BGR,100
+Croatia,European Region,EUR,HR,HRV,191
+Cyprus,European Region,EUR,CY,CYP,196
+Denmark,European Region,EUR,DK,DNK,208
+Estonia,European Region,EUR,EE,EST,233
+Finland,European Region,EUR,FI,FIN,246
+France,European Region,EUR,FR,FRA,250
+Georgia,European Region,EUR,GE,GEO,268
+Germany,European Region,EUR,DE,DEU,276
+Greece,European Region,EUR,GR,GRC,300
+Hungary,European Region,EUR,HU,HUN,348
+Iceland,European Region,EUR,IS,ISL,352
+Ireland,European Region,EUR,IE,IRL,372
+Israel,European Region,EUR,IL,ISR,376
+Italy,European Region,EUR,IT,ITA,380
+Kazakhstan,European Region,EUR,KZ,KAZ,398
+Kyrgyzstan,European Region,EUR,KG,KGZ,417
+Latvia,European Region,EUR,LV,LVA,428
+Lithuania,European Region,EUR,LT,LTU,440
+Luxembourg,European Region,EUR,LU,LUX,442
+Malta,European Region,EUR,MT,MLT,470
+Monaco,European Region,EUR,MC,MCO,492
+Montenegro,European Region,EUR,ME,MNE,499
+Norway,European Region,EUR,NO,NOR,578
+Poland,European Region,EUR,PL,POL,616
+Portugal,European Region,EUR,PT,PRT,620
+Romania,European Region,EUR,RO,ROU,642
+San Marino,European Region,EUR,SM,SMR,674
+Serbia,European Region,EUR,RS,SRB,688
+Slovakia,European Region,EUR,SK,SVK,703
+Slovenia,European Region,EUR,SI,SVN,705
+Spain,European Region,EUR,ES,ESP,724
+Sweden,European Region,EUR,SE,SWE,752
+Switzerland,European Region,EUR,CH,CHE,756
+Tajikistan,European Region,EUR,TJ,TJK,762
+Turkey,European Region,EUR,TR,TUR,792
+Turkmenistan,European Region,EUR,TM,TKM,795
+Ukraine,European Region,EUR,UA,UKR,804
+Uzbekistan,European Region,EUR,UZ,UZB,860
+Afghanistan,Eastern Mediterranean Region,EMR,AF,AFG,004
+Bahrain,Eastern Mediterranean Region,EMR,BH,BHR,048
+Djibouti,Eastern Mediterranean Region,EMR,DJ,DJI,262
+Egypt,Eastern Mediterranean Region,EMR,EG,EGY,818
+Iraq,Eastern Mediterranean Region,EMR,IQ,IRQ,368
+Jordan,Eastern Mediterranean Region,EMR,JO,JOR,400
+Kuwait,Eastern Mediterranean Region,EMR,KW,KWT,414
+Lebanon,Eastern Mediterranean Region,EMR,LB,LBN,422
+Libya,Eastern Mediterranean Region,EMR,LY,LBY,434
+Morocco,Eastern Mediterranean Region,EMR,MA,MAR,504
+Oman,Eastern Mediterranean Region,EMR,OM,OMN,512
+Pakistan,Eastern Mediterranean Region,EMR,PK,PAK,586
+Qatar,Eastern Mediterranean Region,EMR,QA,QAT,634
+Saudi Arabia,Eastern Mediterranean Region,EMR,SA,SAU,682
+Somalia,Eastern Mediterranean Region,EMR,SO,SOM,706
+Tunisia,Eastern Mediterranean Region,EMR,TN,TUN,788
+Yemen,Eastern Mediterranean Region,EMR,YE,YEM,887
+Australia,Western Pacific Region,WPR,AU,AUS,036
+Cambodia,Western Pacific Region,WPR,KH,KHM,116
+China,Western Pacific Region,WPR,CN,CHN,156
+Fiji,Western Pacific Region,WPR,FJ,FJI,242
+Japan,Western Pacific Region,WPR,JP,JPN,392
+Kiribati,Western Pacific Region,WPR,KI,KIR,296
+Malaysia,Western Pacific Region,WPR,MY,MYS,458
+Mongolia,Western Pacific Region,WPR,MN,MNG,496
+Nauru,Western Pacific Region,WPR,NR,NRU,520
+New Zealand,Western Pacific Region,WPR,NZ,NZL,554
+Niue,Western Pacific Region,WPR,NU,NIU,570
+Palau,Western Pacific Region,WPR,PW,PLW,585
+Papua New Guinea,Western Pacific Region,WPR,PG,PNG,598
+Samoa,Western Pacific Region,WPR,WS,WSM,882
+Singapore,Western Pacific Region,WPR,SG,SGP,702
+Solomon Islands,Western Pacific Region,WPR,SB,SLB,090
+Tonga,Western Pacific Region,WPR,TO,TON,776
+Tuvalu,Western Pacific Region,WPR,TV,TUV,798
+Vanuatu,Western Pacific Region,WPR,VU,VUT,548
